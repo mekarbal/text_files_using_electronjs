@@ -31,26 +31,44 @@
         </ul>
         <div class="tab-content" id="pills-tabContent">
           <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-            <form>
-              <div class="mb-3">
-                <label for="name" class="form-label">Name :</label>
-                <input type="text" class="form-control" id="name">
-              </div>
-              <div class="mb-3">
-                <label for="number" class="form-label">Number :</label>
-                <input type="text" class="form-control" id="number" placeholder="+212600000000">
-              </div>
-              <div class="d-grid gap-2">
-                <div class="row">
-                  <div class="col-6 d-grid gap-2">
-                    <button class="btn btn-success" type="button"><i class="fas fa-phone-alt"></i></button>
+            <div class="row">
+              <div class="col-6">
+                <h1>Form Contacts</h1>
+                <form>
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Name :</label>
+                    <input type="text" class="form-control" id="name" required>
                   </div>
-                  <div class="col-6 d-grid gap-2">
-                    <button class="btn btn-primary" type="button" onclick="save()">Button</button>
+                 
+                  <div class="d-grid gap-2">
+                      <div class="d-grid gap-2">
+                        <button class="btn btn-primary" type="button" onclick="save()">Button</button>
+                      </div>
                   </div>
-                </div>
+                </form>
               </div>
-            </form>
+              <div class="col-6">
+                <h1>Form Calls</h1>
+                <form>
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Name :</label>
+                    <input type="text" class="form-control" id="name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="number" class="form-label">Number :</label>
+                    <input type="tel" class="form-control" id="number" name="input" pattern="^[0-9\-\+\s\(\)]*$" value="" placeholder="Phone Number*" required>
+                    <label class="label" for="input">Phone Number</label> 
+                    <span class="info">Please add a valid Phone Number</span> 
+                  </div>
+                  <div class="d-grid gap-2">
+                      <div class=" d-grid gap-2">
+                        <button class="btn btn-success" type="button" onclick="call()"><i class="fas fa-phone-alt"></i></button>
+                      </div>
+                      
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
 
 
@@ -65,7 +83,15 @@
           </div>
 
           
-          <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+          <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+            
+            <ul class="list-group" id="list-group">
+             
+            </ul>
+            <div class="d-grid">
+              <button class="btn btn-primary btn-block my-3" onclick="listAppels()">Refresh Page</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

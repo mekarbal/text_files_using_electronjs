@@ -35,12 +35,12 @@ function save(){
     let path = __dirname + "number.txt"
 
     if(fs.existsSync(path)){
-      fs.appendFile(path, name + "\n", (err) => {
+      fs.appendFile(path, name + ";", (err) => {
         const result = err ? err : "new number saved !!";
         console.log(result)
       });
     }else{
-      fs.writeFile(path, name + " \n", err => {
+      fs.writeFile(path, name + ";", err => {
         if(err) throw err;
         console.log("Number saved !")
       })
@@ -68,18 +68,102 @@ const listContacts = () => {
     contacts.push(data);
 
     console.log("the file content is:" + data);
-
+    console.log(contacts)
 
 
     let ul = document.querySelector(".list-group")
-    const html = `
+
+      var html = ``;
+    for(var i = 0; i < contacts.toString().split(";").length -1 ; i++){
+    html = `
     <li class="list-group-item my-2">
         <img src="man.png" alt="" width="40px" height="40px">
-        ${contacts}
+        ${
+        contacts.toString().split(";")[i] 
+        }
     </li>
     `
-         ul.innerHTML = html
+    ul.innerHTML  =  ul.innerHTML + html;
+    }
 
+    
+    
+  })
+}
+
+
+const call = () => {
+  let name = document.getElementById("name").value;
+  let number = document.getElementById("number").value;
+  let path = __dirname + "listCall.txt";
+
+  var date = new Date();
+
+  var dateAppel = ("00" + date.getDate()).slice(-2) +
+  "/" +
+  ("00" + (date.getMonth() + 1)).slice(-2) +
+  "/" +
+  date.getFullYear() +
+  " " +
+  ("00" + date.getHours()).slice(-2) +
+  ":" +
+  ("00" + date.getMinutes()).slice(-2) +
+  ":" +
+  ("00" + date.getSeconds()).slice(-2);
+
+  if(fs.existsSync(path)){
+    fs.appendFile(path, name + " " + number + " " + dateAppel + ";", (err) => {
+      const result = err ? err : "is Calling"
+      console.log(result)
+    })
+  }else{
+    fs.writeFile(path, name + " " + number + " " + dateAppel + ";", err => {
+      if(err) throw err;
+      console.log("Call is Created");
+      console.log("is Calling")
+    })
+  }
+}
+
+const listAppels = () => {
+  let path = __dirname + "listCall.txt"
+
+  if(path === undefined) {
+    console.warn("No file Selected")
+    return
+  }
+
+  fs.readFile(path, 'utf-8', (err, data) => {
+    if(err){
+      alert("An error occurred reading the file :" + err.message)
+      return
+    }
+
+    let listCalls = [];
+
+    listCalls.push(data);
+
+    console.log("the file content is:" + data);
+    console.log(listCalls)
+
+
+    let ul = document.querySelector("#list-group")
+    var html = ``;
+    
+    for(var i = 0; i < listCalls.toString().split(";").length -1 ; i++){
+    html = `
+    <li class="list-group-item my-2">
+        <img src="man.png" alt="" width="40px" height="40px">
+        ${
+        listCalls.toString().split(";")[i] 
+        }
+    </li>
+    `
+    ul.innerHTML  =  ul.innerHTML + html;
+    }
+
+    
+    
   })
 }
 
