@@ -78,8 +78,9 @@ const listContacts = () => {
 
 const call = () => {
   let number = document.getElementById("number").value;
+  console.log(number);
   let path = "./src/files/callsHistory.txt";
-
+  let ul = document.getElementById("callPopUp");
   var date = new Date();
 
   var dateAppel =
@@ -101,16 +102,14 @@ const call = () => {
       console.log(result);
     });
   } else {
-    fs.writeFile(path, name + " " + number + " " + dateAppel + ";", (err) => {
+    fs.writeFile(path, number + " " + dateAppel + ";", (err) => {
       if (err) throw err;
-      console.log("Calling");
     });
   }
-
-  document.getElementById("callPopUp").innerHTML = number + "...";
+  ul.innerHTML = ul.innerHTML + number;
 };
 
-const listAppels = () => {
+const calls = () => {
   let path = "./src/files/callsHistory.txt";
 
   if (path === undefined) {
@@ -128,7 +127,7 @@ const listAppels = () => {
 
     callsHistorys.push(data);
 
-    let ul = document.querySelector("#list-group");
+    let ul = document.querySelector("#lists");
     var html = ``;
 
     for (var i = 0; i < callsHistorys.toString().split(";").length - 1; i++) {
