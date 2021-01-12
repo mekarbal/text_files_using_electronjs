@@ -1,17 +1,18 @@
 {
-  "name": "electron-app",
-  "version": "1.0.0",
-  "description": "My Electron application description",
-  "main": "src/index.js",
-  "scripts": {
-    "start": "electron ."
-  },
-  "keywords": [
-    "electron"
-  ],
-  "author": "Radhesh Khanna",
-  "license": "ISC",
-  "dependencies": {
-    "electron": "^11.1.1"
-  }
+    "name": "electron-app-files",
+    "version": "",
+    "description": "",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "keywords": [
+        "electron"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "electron": "^11.1.1",
+        "electron-squirrel-startup": "^1.0.0"
+    }
 }

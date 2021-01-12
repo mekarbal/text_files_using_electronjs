@@ -1,66 +1,57 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
-const fs = require("fs")
+const { app, BrowserWindow } = require("electron");
+const path = require("path");
+const fs = require("fs");
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+if (require("electron-squirrel-startup")) {
+  // eslint-disable-line global-require
   app.quit();
 }
-
-
-
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 420,
+    height: 800,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
     },
-
-
   });
-  
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // and load the index.html of the app.
+  mainWindow.loadFile(path.join(__dirname, "index.html"));
 };
 
-function save(){
+function saveNumber() {
   let name = document.getElementById("name").value;
+  let number = document.getElementById("number").value;
   // let number = document.getElementById("number").value;
-    let path = __dirname + "number.txt"
+  let path = "./src/files/number.txt";
 
-    if(fs.existsSync(path)){
-      fs.appendFile(path, name + ";", (err) => {
-        const result = err ? err : "new number saved !!";
-        console.log(result)
-      });
-    }else{
-      fs.writeFile(path, name + ";", err => {
-        if(err) throw err;
-        console.log("Number saved !")
-      })
-    }
-    document.querySelector("form").reset();
+  if (fs.existsSync(path)) {
+    fs.appendFile(path, name + " " + number + ";", (err) => {
+      const result = err ? err : "";
+      console.log(result);
+    });
+  } else {
+    fs.writeFile(path, name + " " + number + ";", (err) => {
+      if (err) throw err;
+    });
+  }
 }
 
-
 const listContacts = () => {
-  let path = __dirname + "number.txt"
+  let path = "./src/files/number.txt";
 
-  if(path === undefined) {
-    console.warn("No file Selected")
-    return
+  if (path === undefined) {
+    console.warn("No file Selected");
+    return;
   }
 
-  fs.readFile(path, 'utf-8', (err, data) => {
-    if(err){
-      alert("An error occurred reading the file :" + err.message)
-      return
+  fs.readFile(path, "utf-8", (err, data) => {
+    if (err) {
+      alert("An error occurred reading the file :" + err.message);
+      return;
     }
 
     let contacts = [];
@@ -68,126 +59,92 @@ const listContacts = () => {
     contacts.push(data);
 
     console.log("the file content is:" + data);
-    console.log(contacts)
+    console.log(contacts);
 
+    let ul = document.querySelector(".list-group");
 
-    let ul = document.querySelector(".list-group")
-
-      var html = ``;
-    for(var i = 0; i < contacts.toString().split(";").length -1 ; i++){
-    html = `
+    var html = ``;
+    for (var i = 0; i < contacts.toString().split(";").length - 1; i++) {
+      html = `
     <li class="list-group-item my-2">
         <img src="man.png" alt="" width="40px" height="40px">
-        ${
-        contacts.toString().split(";")[i] 
-        }
+        ${contacts.toString().split(";")[i]}
     </li>
-    `
-    ul.innerHTML  =  ul.innerHTML + html;
+    `;
+      ul.innerHTML = ul.innerHTML + html;
     }
-
-    
-    
-  })
-}
-
+  });
+};
 
 const call = () => {
-  let name = document.getElementById("name").value;
   let number = document.getElementById("number").value;
-  let path = __dirname + "listCall.txt";
+  let path = "./src/files/callsHistory.txt";
 
   var date = new Date();
 
-  var dateAppel = ("00" + date.getDate()).slice(-2) +
-  "/" +
-  ("00" + (date.getMonth() + 1)).slice(-2) +
-  "/" +
-  date.getFullYear() +
-  " " +
-  ("00" + date.getHours()).slice(-2) +
-  ":" +
-  ("00" + date.getMinutes()).slice(-2) +
-  ":" +
-  ("00" + date.getSeconds()).slice(-2);
+  var dateAppel =
+    ("00" + date.getDate()).slice(-2) +
+    "/" +
+    ("00" + (date.getMonth() + 1)).slice(-2) +
+    "/" +
+    date.getFullYear() +
+    " " +
+    ("00" + date.getHours()).slice(-2) +
+    ":" +
+    ("00" + date.getMinutes()).slice(-2) +
+    ":" +
+    ("00" + date.getSeconds()).slice(-2);
 
-  if(fs.existsSync(path)){
-    fs.appendFile(path, name + " " + number + " " + dateAppel + ";", (err) => {
-      const result = err ? err : "is Calling"
-      console.log(result)
-    })
-  }else{
-    fs.writeFile(path, name + " " + number + " " + dateAppel + ";", err => {
-      if(err) throw err;
-      console.log("Call is Created");
-      console.log("is Calling")
-    })
+  if (fs.existsSync(path)) {
+    fs.appendFile(path, number + " " + dateAppel + ";", (err) => {
+      const result = err ? err : "Calling ...";
+      console.log(result);
+    });
+  } else {
+    fs.writeFile(path, name + " " + number + " " + dateAppel + ";", (err) => {
+      if (err) throw err;
+      console.log("Calling");
+    });
   }
-}
+
+  document.getElementById("callPopUp").innerHTML = number + "...";
+};
 
 const listAppels = () => {
-  let path = __dirname + "listCall.txt"
+  let path = "./src/files/callsHistory.txt";
 
-  if(path === undefined) {
-    console.warn("No file Selected")
-    return
+  if (path === undefined) {
+    console.log("No file Selected");
+    return;
   }
 
-  fs.readFile(path, 'utf-8', (err, data) => {
-    if(err){
-      alert("An error occurred reading the file :" + err.message)
-      return
+  fs.readFile(path, "utf-8", (err, data) => {
+    if (err) {
+      alert(err.message);
+      return;
     }
 
-    let listCalls = [];
+    let callsHistorys = [];
 
-    listCalls.push(data);
+    callsHistorys.push(data);
 
-    console.log("the file content is:" + data);
-    console.log(listCalls)
-
-
-    let ul = document.querySelector("#list-group")
+    let ul = document.querySelector("#list-group");
     var html = ``;
-    
-    for(var i = 0; i < listCalls.toString().split(";").length -1 ; i++){
-    html = `
-    <li class="list-group-item my-2">
-        <img src="man.png" alt="" width="40px" height="40px">
-        ${
-        listCalls.toString().split(";")[i] 
-        }
-    </li>
-    `
-    ul.innerHTML  =  ul.innerHTML + html;
-    }
 
-    
-    
-  })
-}
+    for (var i = 0; i < callsHistorys.toString().split(";").length - 1; i++) {
+      html = `
+    <li class="list-group-item my-2 ">
+        <img src="man.png" alt="" width="40px" height="40px">
+        <span class="mr-8">${callsHistorys.toString().split(";")[i]}</span>
+    </li>
+    `;
+      ul.innerHTML = ul.innerHTML + html;
+    }
+  });
+};
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+app.whenReady().then(createWindow);
