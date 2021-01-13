@@ -60,6 +60,14 @@ div {
     color: #0A51BC;
 }
 
+span {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* align-items: center; */
+    font-size: 15px;
+}
+
 .header .reset button:focus {
     background: #f8f8f8;
 }
