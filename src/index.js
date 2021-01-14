@@ -26,12 +26,12 @@ function saveNumber() {
   let path = "./src/files/number.txt";
 
   if (fs.existsSync(path)) {
-    fs.appendFile(path, name + " " + number + ";", (err) => {
+    fs.appendFile(path, name + " " + number + "\n", (err) => {
       const result = err ? err : "";
       console.log(result);
     });
   } else {
-    fs.writeFile(path, name + " " + number + ";", (err) => {
+    fs.writeFile(path, name + " " + number + "\n", (err) => {
       if (err) throw err;
     });
   }
@@ -58,11 +58,11 @@ const listContacts = () => {
 
     let ul = document.querySelector(".list-group");
 
-    for (var i = 0; i < contacts.toString().split(";").length - 1; i++) {
+    for (var i = 0; i < contacts.toString().split("\n").length - 1; i++) {
       var html = `
     <li class="list-group-item my-2">
         <img src="man.png" alt="" width="40px" height="40px">
-        ${contacts.toString().split(";")[i]}
+        ${contacts.toString().split("\n")[i]}
     </li>
     `;
       ul.innerHTML = ul.innerHTML + html;
@@ -91,11 +91,11 @@ const call = () => {
     ("00" + date.getSeconds()).slice(-2);
 
   if (fs.existsSync(path)) {
-    fs.appendFile(path, number + " " + dateAppel + ";", (err) => {
+    fs.appendFile(path, number + " " + dateAppel + "\n", (err) => {
       err ? console.log(err) : console.log("Calling........");
     });
   } else {
-    fs.writeFile(path, number + " " + dateAppel + ";", (err) => {
+    fs.writeFile(path, number + " " + dateAppel + "\n", (err) => {
       if (err) throw err;
     });
   }
@@ -124,11 +124,11 @@ const calls = () => {
     let ul = document.querySelector("#lists");
     var html = ``;
 
-    for (var i = 0; i < callsHistorys.toString().split(";").length - 1; i++) {
+    for (var i = 0; i < callsHistorys.toString().split("\n").length - 1; i++) {
       html = `
     <li class="list-group-item my-2 ">
         <img src="man.png" alt="" width="40px" height="40px">
-        <span class="mr-8">${callsHistorys.toString().split(";")[i]}</span>
+        <span class="mr-8">${callsHistorys.toString().split("\n")[i]}</span>
     </li>
     `;
       ul.innerHTML = ul.innerHTML + html;
